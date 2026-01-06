@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
  * (C) Copyright Microsoft Corporation 2021.
  *
@@ -13,42 +14,86 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>hello-world</groupId>
-	<artifactId>hello-world-modules</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
+    <modelVersion>4.0.0</modelVersion>
 
-	<modules>
-		<module>hello-world-ejb-client</module>
-		<module>hello-world-ejb</module>
-		<module>hello-world-web</module>
-		<module>hello-world-client</module>
-		<module>hello-world</module>
-	</modules>
+    <groupId>hello-world</groupId>
+    <artifactId>hello-world-modules</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>javax.ejb-api</artifactId>
-			<version>3.2</version>
-			<scope>provided</scope>
-		</dependency>
-		<!-- Needed only for Java SE 9+ -->
-		<dependency>
-			<groupId>org.glassfish.corba</groupId>
-			<artifactId>glassfish-corba-orb</artifactId>
-			<version>4.2.0</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Open Liberty -->
+        <liberty.maven.plugin.version>3.10.3</liberty.maven.plugin.version>
+        <liberty.runtime.version>23.0.0.12</liberty.runtime.version>
+    </properties>
+
+    <modules>
+        <module>hello-world-ejb-client</module>
+        <module>hello-world-ejb</module>
+        <module>hello-world-web</module>
+        <module>hello-world-client</module>
+        <module>hello-world</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>javax.ejb-api</artifactId>
+            <version>3.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Needed only for Java SE 9+ -->
+        <dependency>
+            <groupId>org.glassfish.corba</groupId>
+            <artifactId>glassfish-corba-orb</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>${liberty.maven.plugin.version}</version>
+
+                <configuration>
+                    <!-- Download and use Open Liberty automatically -->
+                    <runtimeArtifact>
+                        <groupId>io.openliberty</groupId>
+                        <artifactId>openliberty-runtime</artifactId>
+                        <version>${liberty.runtime.version}</version>
+                        <type>zip</type>
+                    </runtimeArtifact>
+
+                    <!-- Server configuration directory -->
+                    <serverName>defaultServer</serverName>
+                    <configDirectory>src/main/liberty/config</configDirectory>
+
+                    <!-- Deploy all built applications -->
+                    <deployPackages>all</deployPackages>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>8</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
