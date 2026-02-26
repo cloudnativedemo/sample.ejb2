@@ -80,6 +80,9 @@
                     <!-- Server configuration directory -->
                     <serverName>defaultServer</serverName>
                     <configDirectory>src/main/liberty/config</configDirectory>
+                    
+                    <!-- Application deployment directory -->
+                    <appsDirectory>apps</appsDirectory>
 
                     <!-- Deploy all built applications -->
                     <deployPackages>all</deployPackages>

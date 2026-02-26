@@ -101,6 +101,15 @@
 					</modules>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>io.openliberty.tools</groupId>
+				<artifactId>liberty-maven-plugin</artifactId>
+				<configuration>
+					<appsDirectory>apps</appsDirectory>
+					<stripVersion>true</stripVersion>
+					<looseApplication>false</looseApplication>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
